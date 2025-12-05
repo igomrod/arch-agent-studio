@@ -113,29 +113,53 @@ The agent will analyze the image, identify systems, containers, and relationship
 
 ---
 
+
 ## Managing Projects
 
-This studio supports multiple Structurizr projects.
+This studio allows you to work on multiple architecture projects simultaneously.
+
+### Structure
+-   Each project is stored in its own directory: `projects/<project-name>/`.
+-   The currently active project is tracked in the `.current_project` file.
+-   When you start the server, it loads the project defined in `.current_project`.
 
 ### Creating a New Project
-Use the Antigravity workflow or run manually:
+You can ask the agent to create a new project using the workflow, or run the command manually.
+
+**🤖 Antigravity Workflow:**
+> "@[/start_project] my-new-project"
+
+**🛠️ Manual Command:**
 ```bash
 make init-project NAME=my-new-project
 ```
-This will create a new directory in `projects/` and switch to it.
+*This creates `projects/my-new-project`, switches to it, and starts the server.*
 
 ### Switching Projects
-Use the Antigravity workflow or run manually:
+To switch context to a different existing project:
+
+**🤖 Antigravity Workflow:**
+> "@[/switch_project] existing-project"
+
+**🛠️ Manual Command:**
 ```bash
 make switch-project NAME=existing-project
 ```
-This will update the `.current_project` file and restart the server.
+*This updates `.current_project` and restarts the Structurizr Lite container.*
+
+### Managing Diagrams
+To export your diagrams to PNG images:
+
+**🤖 Antigravity Workflow:**
+> "@[/export_diagrams]"
+*(This will check your system for Puppeteer prerequisites and export all views)*
 
 ### Start the Server
+If the server is stopped, you can start it for the currently selected project:
+
 ```bash
 make up
 ```
-This starts Structurizr Lite for the currently selected project (defined in `.current_project`).
 
 ---
 
