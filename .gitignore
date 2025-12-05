@@ -10,3 +10,6 @@ projects/*
 # Ignore Structurizr generated files
 projects/**/.structurizr/
 projects/**/workspace.json
+
+# System files
+.DS_Store
