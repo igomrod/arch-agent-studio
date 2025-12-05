@@ -48,6 +48,12 @@ This repository is "Agentic IDE Agnostic". It includes standardized guidelines f
 -   `AI_GUIDELINES.md`: The generic source of truth for all agents.
 -   `.cursorrules`: Specific instructions for Cursor.
 -   `.windsurfrules`: Specific instructions for Windsurf.
+-   `.agent/rules/AI_GUIDELINES.md`: Specific instructions for Antigravity IDE.
 -   `.github/copilot-instructions.md`: Specific instructions for GitHub Copilot.
 
 These files ensure that any AI agent understands the hierarchy (Context, Container, Component) and follows best practices.
+
+### Synchronization
+To avoid duplication, `AI_GUIDELINES.md` is the single source of truth. If you need to update the guidelines:
+1.  Edit `AI_GUIDELINES.md`.
+2.  Run `make sync-rules` to propagate changes to the other files.

@@ -87,4 +87,77 @@ When the user asks for architectural changes:
 1.  **Analyze**: Determine which level of the C4 model is affected (Context, Container, Component).
 2.  **Plan**: Decide if new elements need to be created or existing ones modified.
 3.  **Implement**: Modify the `.dsl` file.
-4.  **Refine**: If the diagram looks cluttered, suggest adding specific views or filtering elements.
+## 6. Advanced DSL Features
+
+### Deployment Views
+Use deployment views to show how containers are mapped to infrastructure.
+```structurizr
+model {
+    # ...
+    live = deploymentEnvironment "Live" {
+        deploymentNode "Amazon Web Services" {
+            tags "Amazon Web Services - Cloud"
+            
+            region = deploymentNode "US-East-1" {
+                tags "Amazon Web Services - Region"
+                
+                route53 = infrastructureNode "Route 53" {
+                    tags "Amazon Web Services - Route 53"
+                }
+
+                elb = infrastructureNode "Elastic Load Balancer" {
+                    tags "Amazon Web Services - Elastic Load Balancing"
+                }
+
+                ec2 = deploymentNode "EC2" {
+                    tags "Amazon Web Services - EC2"
+                    
+                    webAppInstance = containerInstance webApp
+                }
+            }
+        }
+    }
+}
+
+views {
+    deployment system live "Deployment" {
+        include *
+        autoLayout
+    }
+}
+```
+
+### Dynamic Views
+Use dynamic views to show runtime interactions for specific use cases.
+```structurizr
+views {
+    dynamic system "SignIn" "Summarises how the user signs in." {
+        user -> webApp "Visits sign in page"
+        user -> webApp "Submits credentials"
+        webApp -> db "Validates credentials"
+        webApp -> user "Sends auth token"
+        autoLayout
+    }
+}
+```
+
+### Styling
+Use the `styles` block to customize the look and feel.
+```structurizr
+views {
+    styles {
+        element "Person" {
+            shape Person
+            background #08427b
+            color #ffffff
+        }
+        element "Database" {
+            shape Cylinder
+        }
+        element "Web Browser" {
+            shape WebBrowser
+        }
+    }
+}
+```
+
