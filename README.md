@@ -24,10 +24,34 @@ This repository is designed for "Agentic Architecture" work using the C4 Model a
     make down
     ```
 
+## Managing Projects
+
+This studio supports multiple Structurizr projects.
+
+### Creating a New Project
+Use the Antigravity workflow or run manually:
+```bash
+make init-project NAME=my-new-project
+```
+This will create a new directory in `projects/` and switch to it.
+
+### Switching Projects
+Use the Antigravity workflow or run manually:
+```bash
+make switch-project NAME=existing-project
+```
+This will update the `.current_project` file and restart the server.
+
+### Start the Server
+```bash
+make up
+```
+This starts Structurizr Lite for the currently selected project (defined in `.current_project`).
+
 ## How to Use
 
 ### Modifying the Architecture
-The architecture is defined in `workspace/workspace.dsl`. You can edit this file manually or ask an AI agent to do it for you.
+The architecture is defined in `projects/<current-project>/workspace.dsl`. You can edit this file manually or ask an AI agent to do it for you.
 
 **Example Prompts for AI:**
 -   "Add a 'Web Application' container to the Software System."
