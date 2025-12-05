@@ -6,4 +6,10 @@ services:
       - ${PROJECT_PATH:-./projects/example-project}:/usr/local/structurizr
     ports:
       - "8080:8080"
-    restart: unless-stopped
+    networks:
+      - arch-agent-network
+
+networks:
+  arch-agent-network:
+    name: arch-agent-network
+    driver: bridge

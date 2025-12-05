@@ -13,3 +13,7 @@ projects/**/workspace.json
 
 # System files
 .DS_Store
+
+# Test artifacts
+make_output.txt
+tests/bash_unit

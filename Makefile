@@ -1,4 +1,4 @@
-.PHONY: up down logs sync-rules init-project switch-project
+.PHONY: up down logs init-project switch-project export-diagrams test
 
 # Default project path
 PROJECT_PATH ?= ./projects/example-project
@@ -8,13 +8,7 @@ ifneq (,$(wildcard .current_project))
     PROJECT_PATH := $(shell cat .current_project)
 endif
 
-sync-rules:
-	mkdir -p .agent/rules
-	cp AI_GUIDELINES.md .cursorrules
-	cp AI_GUIDELINES.md .windsurfrules
-	cp AI_GUIDELINES.md .github/copilot-instructions.md
-	cp AI_GUIDELINES.md .agent/rules/AI_GUIDELINES.md
-	@echo "AI Guidelines synchronized."
+
 
 up:
 	@echo "Starting Structurizr for project: $(PROJECT_PATH)"
@@ -55,7 +49,7 @@ export-diagrams:
 	@echo "Exporting diagrams for project: $(PROJECT_PATH)"
 	@mkdir -p $(PROJECT_PATH)/export
 	@docker run --rm \
-		--network arch-agent-studio_default \
+		--network arch-agent-network \
 		-v $(CURDIR)/scripts:/scripts \
 		-v $(CURDIR)/$(PROJECT_PATH)/export:/output \
 		-e STRUCTURIZR_URL="http://structurizr-lite:8080" \
@@ -63,3 +57,7 @@ export-diagrams:
 		-e NODE_PATH="/home/pptruser/node_modules" \
 		ghcr.io/puppeteer/puppeteer:latest \
 		node /scripts/export-diagrams.js
+
+test:
+	@./tests/setup.sh
+	@./tests/bash_unit tests/test_e2e.sh
