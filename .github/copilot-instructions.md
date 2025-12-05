@@ -45,11 +45,13 @@ workspace {
         # Define views here
         systemContext system "Context" {
             include *
+            // Remove the next line to enable manual layout
             autoLayout
         }
         
         container system "Containers" {
             include *
+            // Remove the next line to enable manual layout
             autoLayout
         }
 
@@ -81,6 +83,7 @@ To keep the architecture maintainable:
 -   **Syntax Check**: The Structurizr DSL is strict. Ensure braces `{}` are balanced and keywords are correct.
 -   **Hot Reload**: The local environment is set up with `structurizr/lite`. Changes to `workspace/workspace.dsl` are automatically detected.
 -   **Verification**: If you are unsure about syntax, you can ask the user to check the logs (`make logs`) or the browser UI.
+-   **Layout**: Always include `autoLayout` with a comment above it. This provides a default layout while allowing the user to opt-in to manual positioning.
 
 ## 5. Interaction Guidelines
 When the user asks for architectural changes:
@@ -94,7 +97,10 @@ You must ALWAYS generate the following views to provide a complete architectural
 1.  **System Context**: High-level overview.
 2.  **Container**: Technical building blocks.
 3.  **Component**: Internal structure of key containers (e.g., APIs).
-4.  **Deployment**: Infrastructure mapping for both **Development** (Local) and **Production** (Cloud).
+4.  **Deployment**:
+    -   At least one for Production (Live) and one for Development (Local).
+    -   **Component Views**: MUST be created for every container that involves development (e.g., Web Apps, APIs, Workers, CLI tools).
+        -   **Exception**: Off-the-shelf containers like Databases, Message Brokers, or External Systems do not require a Component View unless they contain significant custom logic.
 
 ## 7. Advanced DSL Features
 
@@ -117,6 +123,7 @@ model {
 views {
     component api "Components" {
         include *
+        // Remove the next line to enable manual layout
         autoLayout
     }
 }
@@ -193,11 +200,13 @@ model {
 views {
     deployment system live "Deployment-Prod" {
         include *
+        // Remove the next line to enable manual layout
         autoLayout
     }
     
     deployment system local "Deployment-Dev" {
         include *
+        // Remove the next line to enable manual layout
         autoLayout
     }
 }
@@ -212,6 +221,7 @@ views {
         user -> webApp "Submits credentials"
         webApp -> db "Validates credentials"
         webApp -> user "Sends auth token"
+        // Remove the next line to enable manual layout
         autoLayout
     }
 }

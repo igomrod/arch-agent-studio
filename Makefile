@@ -50,3 +50,16 @@ endif
 	@echo "Switched to project: $(NAME)"
 	@$(MAKE) down
 	@$(MAKE) up
+
+export-diagrams:
+	@echo "Exporting diagrams for project: $(PROJECT_PATH)"
+	@mkdir -p $(PROJECT_PATH)/export
+	@docker run --rm \
+		--network arch-agent-studio_default \
+		-v $(CURDIR)/scripts:/scripts \
+		-v $(CURDIR)/$(PROJECT_PATH)/export:/output \
+		-e STRUCTURIZR_URL="http://structurizr-lite:8080" \
+		-e OUTPUT_DIR="/output" \
+		-e NODE_PATH="/home/pptruser/node_modules" \
+		ghcr.io/puppeteer/puppeteer:latest \
+		node /scripts/export-diagrams.js

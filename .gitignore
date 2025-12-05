@@ -1,11 +1,12 @@
 .current_project
-.agent/rules/
 
 # Ignore all projects
 projects/*
 
 # Allow example-project
 !projects/example-project/
+!projects/mediumcomplexeample/
+!projects/borjaexample/
 
 # Ignore Structurizr generated files
 projects/**/.structurizr/
