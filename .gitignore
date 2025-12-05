@@ -1,3 +1,12 @@
-workspace/.structurizr/
-workspace/workspace.json
 .current_project
+.agent/rules/
+
+# Ignore all projects
+projects/*
+
+# Allow example-project
+!projects/example-project/
+
+# Ignore Structurizr generated files
+projects/**/.structurizr/
+projects/**/workspace.json

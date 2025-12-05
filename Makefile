@@ -32,6 +32,8 @@ ifndef NAME
 endif
 	mkdir -p projects/$(NAME)
 	cp projects/example-project/workspace.dsl projects/$(NAME)/workspace.dsl
+	cp -r projects/example-project/docs projects/$(NAME)/docs
+	cp -r projects/example-project/adrs projects/$(NAME)/adrs
 	@echo "./projects/$(NAME)" > .current_project
 	@echo "Initialized project: $(NAME)"
 	@echo "Switched to project: $(NAME)"

@@ -87,14 +87,70 @@ When the user asks for architectural changes:
 1.  **Analyze**: Determine which level of the C4 model is affected (Context, Container, Component).
 2.  **Plan**: Decide if new elements need to be created or existing ones modified.
 3.  **Implement**: Modify the `.dsl` file.
-## 6. Advanced DSL Features
+3.  **Implement**: Modify the `.dsl` file.
 
-### Deployment Views
-Use deployment views to show how containers are mapped to infrastructure.
+## 6. Modeling Standards
+You must ALWAYS generate the following views to provide a complete architectural picture:
+1.  **System Context**: High-level overview.
+2.  **Container**: Technical building blocks.
+3.  **Component**: Internal structure of key containers (e.g., APIs).
+4.  **Deployment**: Infrastructure mapping for both **Development** (Local) and **Production** (Cloud).
+
+## 7. Advanced DSL Features
+
+### Component Views
+Use component views to show the internal structure of a container.
 ```structurizr
 model {
+    system = softwareSystem "System" {
+        api = container "API" {
+            controller = component "Controller" "Handles HTTP requests" "Spring MVC"
+            service = component "Service" "Business logic" "Spring Service"
+            repository = component "Repository" "Data access" "Spring Data"
+            
+            controller -> service "Uses"
+            service -> repository "Uses"
+        }
+    }
+}
+
+views {
+    component api "Components" {
+        include *
+        autoLayout
+    }
+}
+```
+
+### Deployment Views
+You must define two deployment environments: `Development` and `Production`.
+
+#### Production (AWS Default)
+-   **Default Provider**: Amazon Web Services (AWS).
+-   **Icons**: Use the official AWS theme: `https://static.structurizr.com/themes/amazon-web-services-2023.01.31/theme.json`.
+-   **Context**:
+    -   **Region**: Group resources in a `deploymentNode "US-East-1"`.
+    -   **Compute**: Use `EC2`, `ECS`, `Lambda`, or `EKS`.
+    -   **Data**: Use `RDS` (PostgreSQL/MySQL), `DynamoDB`, `S3`.
+    -   **Networking**: Use `Route 53`, `ALB` (Application Load Balancer), `CloudFront`.
+    -   **Messaging**: Use `SNS`, `SQS`, `Kinesis`.
+
+#### Development (Local Default)
+-   **Default Provider**: LocalStack or Docker.
+-   **Context**:
+    -   Model the user's local machine (e.g., `deploymentNode "Developer Laptop"`).
+    -   Use `Docker Container` nodes for services.
+    -   If using AWS services locally, assume **LocalStack** is used to emulate them.
+
+#### Example
+```structurizr
+views {
+    theme https://static.structurizr.com/themes/amazon-web-services-2023.01.31/theme.json
+}
+
+model {
     # ...
-    live = deploymentEnvironment "Live" {
+    live = deploymentEnvironment "Production" {
         deploymentNode "Amazon Web Services" {
             tags "Amazon Web Services - Cloud"
             
@@ -105,7 +161,7 @@ model {
                     tags "Amazon Web Services - Route 53"
                 }
 
-                elb = infrastructureNode "Elastic Load Balancer" {
+                elb = infrastructureNode "Load Balancer" {
                     tags "Amazon Web Services - Elastic Load Balancing"
                 }
 
@@ -114,13 +170,33 @@ model {
                     
                     webAppInstance = containerInstance webApp
                 }
+                
+                rds = deploymentNode "RDS" {
+                    tags "Amazon Web Services - RDS"
+                    
+                    dbInstance = containerInstance db
+                }
+            }
+        }
+    }
+    
+    local = deploymentEnvironment "Development" {
+        deploymentNode "Developer Laptop" {
+            deploymentNode "Docker" {
+                webAppLocal = containerInstance webApp
+                dbLocal = containerInstance db
             }
         }
     }
 }
 
 views {
-    deployment system live "Deployment" {
+    deployment system live "Deployment-Prod" {
+        include *
+        autoLayout
+    }
+    
+    deployment system local "Deployment-Dev" {
         include *
         autoLayout
     }
