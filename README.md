@@ -5,7 +5,9 @@
 > 
 > This project is fully experimental and under active development. APIs, workflows, and project structure may change without notice. Use at your own risk.
 
-This repository is designed for "Agentic Architecture" work using the C4 Model and Structurizr DSL. It provides a local environment for visualizing architecture diagrams and a set of guidelines for AI agents to assist in the process.
+This repository is designed for **"Agentic Architecture"** work using the C4 Model and Structurizr DSL. It provides a local environment for visualizing architecture diagrams and a set of guidelines for AI agents to assist in the process.
+
+While the principles here are general, this project is currently **optimized and tested for use with [Antigravity](https://www.google.com/search?q=antigravity+ide) agents**. usage with other agents is possible but experimental.
 
 ---
 
@@ -139,10 +141,19 @@ This starts Structurizr Lite for the currently selected project (defined in `.cu
 
 ## How to Use
 
-### Modifying the Architecture
-The architecture is defined in `projects/<current-project>/workspace.dsl`. You can edit this file manually or ask an AI agent to do it for you.
+### Collaborative Modeling with Agents
+This repository is intended to be used directly by an AI agent (specifically Antigravity). The agent has access to specific rules (in `.agent/rules/c4modelling.md`) that teach it how to write valid Structurizr DSL and follow the C4 model hierarchy.
 
-**Example Prompts for AI:**
+**Recommended Workflow:**
+1.  **Start:** Initialize a project.
+2.  **Brief:** Provide the agent with a high-level description of what you want to model.
+3.  **Refine:** Ask the agent to add details, new containers, or specific views.
+4.  **Visualize:** The agent edits the Code, and you see the results instantly in the browser.
+
+### Modifying the Architecture
+The architecture is defined in `projects/<current-project>/workspace.dsl`. You can edit this file manually, but the power of this studio comes from asking the agent to handle the syntax for you.
+
+**Example Prompts for Antigravity:**
 -   "Add a 'Web Application' container to the Software System."
 -   "Create a relationship between the User and the Web Application."
 -   "Add a component view for the API Application."
@@ -159,12 +170,15 @@ The `structurizr/lite` container is configured to watch for changes in the `work
 
 ## AI Guidelines
 
-This repository is "Agentic IDE Agnostic". It includes standardized guidelines for various AI coding assistants to ensure consistent behavior when working with the C4 Model and Structurizr DSL.
+This repository contains standardized guidelines for AI coding assistants to ensure consistent behavior when working with the C4 Model and Structurizr DSL.
 
--   `.agent/rules/c4modelling.md`: C4 Model and Structurizr DSL guidelines for Antigravity IDE.
--   `.github/copilot-instructions.md`: Specific instructions for GitHub Copilot.
+**Tested & Supported:**
+-   `.agent/rules/c4modelling.md`: **Antigravity IDE**. These are the primary rules used to guide the agent in this studio.
 
-These files ensure that any AI agent understands the hierarchy (Context, Container, Component) and follows best practices.
+**Experimental / Legacy:**
+-   `.github/copilot-instructions.md`: Instructions for GitHub Copilot. (Not actively verified).
+
+**Note:** Originally designed to be "Agentic IDE Agnostic", this project has evolved to focus on the capabilities of Antigravity agents. Support for other agents is currently not a priority.
 
 ---
 
