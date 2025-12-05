@@ -12,13 +12,13 @@ endif
 
 up:
 	@echo "Starting Structurizr for project: $(PROJECT_PATH)"
-	PROJECT_PATH=$(PROJECT_PATH) docker-compose up -d
+	PROJECT_PATH=$(PROJECT_PATH) docker compose up -d
 
 down:
-	docker-compose down
+	docker compose down
 
 logs:
-	docker-compose logs -f
+	docker compose logs -f
 
 init-project:
 ifndef NAME
@@ -26,8 +26,8 @@ ifndef NAME
 endif
 	mkdir -p projects/$(NAME)
 	cp projects/example-project/workspace.dsl projects/$(NAME)/workspace.dsl
-	cp -r projects/example-project/docs projects/$(NAME)/docs
-	cp -r projects/example-project/adrs projects/$(NAME)/adrs
+	[ -d projects/example-project/docs ] && cp -r projects/example-project/docs projects/$(NAME)/docs || mkdir -p projects/$(NAME)/docs
+	[ -d projects/example-project/adrs ] && cp -r projects/example-project/adrs projects/$(NAME)/adrs || mkdir -p projects/$(NAME)/adrs
 	@echo "./projects/$(NAME)" > .current_project
 	@echo "Initialized project: $(NAME)"
 	@echo "Switched to project: $(NAME)"
