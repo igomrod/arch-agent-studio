@@ -5,8 +5,7 @@ projects/*
 
 # Allow example-project
 !projects/example-project/
-!projects/mediumcomplexeample/
-!projects/borjaexample/
+
 
 # Ignore Structurizr generated files
 projects/**/.structurizr/
