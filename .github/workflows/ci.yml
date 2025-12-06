@@ -13,8 +13,5 @@ jobs:
     steps:
     - uses: actions/checkout@v4
 
-    steps:
-    - uses: actions/checkout@v4
-
     - name: Run E2E Tests
       run: make test
