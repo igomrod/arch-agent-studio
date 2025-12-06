@@ -48,6 +48,7 @@ endif
 export-diagrams:
 	@echo "Exporting diagrams for project: $(PROJECT_PATH)"
 	@mkdir -p $(PROJECT_PATH)/export
+	@chmod 777 $(PROJECT_PATH)/export
 	@docker run --rm \
 		--network arch-agent-network \
 		-v $(CURDIR)/scripts:/scripts \
